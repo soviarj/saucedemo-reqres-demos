@@ -15,7 +15,7 @@ export class ApiClients {
     }
 
     async createUser() {
-        return this.request.post('https://reqres.in/api/users', {
+        return this.request.post(usersEndpoint, {
             headers: {
                 'x-api-key': apiKey
             },
