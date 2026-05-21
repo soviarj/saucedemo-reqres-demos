@@ -19,15 +19,22 @@ for (const user of Object.values(users)) {
     });
 
       test('should display products @displayProducts', async ({ page }) => {
+        // important business requirement: the products should be displayed on the inventory page
+
         await expect(page.locator(InventoryLocators.productItems)).toHaveCount(6);
       });
 
       test('should add a product to the cart @addToCart', async ({ page, inventoryPage }) => {
+        // Customers should be able to add products to the cart and see the cart badge update accordingly
+
         await inventoryPage.addToCartButtons();
         await expect(page.locator(InventoryLocators.cartBadge)).toHaveText('1');
       });
 
       test('should complete the checkout process @checkout', async ({ page, inventoryPage }) => {
+        // Key e2e flow: Customers should be able to add products to the cart, proceed to checkout, 
+        // fill in their information, and complete the purchase successfully
+
         await test.step('Add product to cart and proceed to checkout', async () => {
           await inventoryPage.proceedToCheckout();
         });
@@ -56,6 +63,9 @@ for (const user of Object.values(users)) {
       });
 
       test('list products @listing', async ({ inventoryPage }) => {
+        // User experience requirement: Customers should be able to sort products by price and name, 
+        // and the sorting should work correctly
+        
         await test.step('Sort products from low to high and verify', async () => {
           await inventoryPage.sortProductsBy('lohi');
           await inventoryPage.expectPricesSorted('lohi');
